@@ -1,0 +1,25 @@
+
+.image-row {
+    animation: rotate 20s linear infinite;
+}
+  
+/* Odd rows scroll left to right */
+.image-row.odd {
+    animation-direction: normal;
+}
+  
+/* Even rows scroll right to left */
+.image-row.even {
+    animation-direction: reverse;
+}
+  
+/* Animation keyframes */
+@keyframes rotate {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+}
+  
