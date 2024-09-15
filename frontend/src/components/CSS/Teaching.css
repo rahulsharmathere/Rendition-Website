@@ -1,0 +1,97 @@
+/* CSS Properties for the Teaching Page and 3D Implimentation */
+.preserve-3d {                          /* Preserve the 3D space */
+    transform-style: preserve-3d;
+  }
+  
+  @keyframes autoRun {                                    /*Animation to rotate in circle*/
+    from {
+      transform: perspective(1200px) rotateY(0deg);
+    }
+    to {
+      transform: perspective(1200px) rotateY(360deg);
+    }
+  }
+  
+  .animate-custom{                                    /*Application of Animation*/
+    --rotation-duration: 100s; /* Default duration */
+    animation: autoRun var(--rotation-duration) linear infinite;
+    /* animation: autoRun 100s linear infinite; */
+  }
+  
+  .rotateY-custom {                                   /*Creating a circle with calculating the angle for each*/
+    transform: rotateY(calc(var(--position) * (360deg / (var(--quantity))))) translateZ(660px);
+    transition: all 0.5s ease-in-out;
+  }
+  
+  .rotateY-circle {
+    transform: perspective(1200px) rotateY(0deg) ;
+  }
+
+ .emotionItem{
+  backface-visibility: hidden;
+ }
+  
+  /* Update the rotation speed dynamically */
+  .teachingsCircle.dragging {
+    animation-play-state: paused;
+  }
+  
+  
+.reflection {
+    position: absolute;
+    top: 101%; /* Position it below the original image */
+    left: 0;
+    height: 80%; /* Set the height of the reflection */
+    width: 100%; /* Keep the width the same as the original */
+    transform: scaleY(-1); /* Flip the image vertically */
+    background-image: inherit; /* Use the same background image */
+    background-color: transparent; /* Set a transparent background */
+    object-fit: cover;
+    opacity: 0.2; /* Adjust opacity for the reflection */
+    pointer-events: none; /* Prevent mouse events on the reflection */
+    mask-image: linear-gradient(to bottom, transparent 0%, black 50%); /* Create a gradient fade effect */
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 50%); /* For Safari compatibility */
+}
+
+@keyframes showFull {
+  from {
+    width: 0;
+    height: 0;
+    opacity: 0;
+  }
+  to {
+    width: 90%;
+    height: 80%;
+    opacity: 1;
+  }
+}
+
+.openAnimation {
+  animation: showFull 1s ease-in-out forwards;
+}
+
+@keyframes showNone {
+  to {
+    width: 0;
+    height: 0;
+    opacity: 0;
+  }
+}
+
+.closeAnimation {
+  animation: showNone 1s ease-in-out forwards;
+}
+
+@media (max-width: 600px) {
+  @keyframes autoRun {                                    /*Adjust the animation for smaller screens*/
+    from {
+      transform: perspective(1600px) rotateY(0deg);
+    }
+    to {
+      transform: perspective(1600px) rotateY(360deg);
+    }
+  }
+  .reflection {
+    height: 100%;
+  }
+}

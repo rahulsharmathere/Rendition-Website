@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+    font-family: 'CustomFont';
+    src: url('./assets/CarteBlanche_Demo.ttf') format('truetype');
+    font-weight:lighter;
+}
+
+.heading {
+    font-family: 'CustomFont', sans-serif;
+}
