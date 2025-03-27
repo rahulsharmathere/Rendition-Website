@@ -113,7 +113,7 @@
 .carousel.next .time,
 .carousel.prev .time{
     width: 100%;
-    animation: timeRunning 2s linear 1 forwards;
+    animation: timeRunning 1.5s linear 1 forwards;
 }
 
 @keyframes timeRunning {

@@ -5,7 +5,7 @@ const styles = {
   
     brownGradient: "bg-gradient-to-t from-red-600 to-brown-600 bg-clip-text text-transparent",
 
-    headingFont: "relative text-6xl sm:text-8xl font-luckiest font-semibold tracking-widest text-transparent bg-clip-text bg-gradient-to-br from-orange-200 to-white -top-1 right-1",
+    headingFont: "relative text-6xl sm:text-8xl font-luckiest font-semibold tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-orange-200 to-white -top-1 right-1",
     headingShadow: "absolute text-6xl sm:text-8xl font-luckiest font-semibold tracking-widest text-amber-900",
   };
   

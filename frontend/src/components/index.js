@@ -1,9 +1,11 @@
 import Events from './Events'
 import Footer from './Footer'
-import Fun from './Fun'
+import Productions from './Productions'
 import Home from './Home'
 import Navbar from './Navbar'
 import Team from './Team'
 import Teachings from './Techings'
+import Form from './Form'
+import ReverseScrollComponent from './ReverseScrollComponent'
 
-export {Events, Footer, Fun, Home, Navbar, Teachings, Team}
+export {Events, Footer, Productions, Home, Navbar, Teachings, Team, Form, ReverseScrollComponent}

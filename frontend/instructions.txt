@@ -1,0 +1,40 @@
+*Instructions*
+
+** Guide To Implementation of Google Form Submission **
+1. After clicking on the submit button, it is sending a confirmation mail to the user from the backend using nodemailer
+2. Create a new Google Form for the website submission that must not contain any section otherwise it is very hard to fill out a 
+   multi-page google form without API Scripts and Backend. (Check the one below for more clarity)
+   https://docs.google.com/forms/d/e/1FAIpQLSdbu5bGRRBq-szOgRf6f9jySSOqkefpq4t-uBMSwHzd4qi3yA/viewform?usp=sharing
+3. Update the access of who can fill the form to anyone with the link.
+4. Copy the URL and paste it in the code.
+5. Change the endpoint from /viewform to /formResponse for it to accept the request.
+   Ex. https://docs.google.com/forms/d/e/.../viewform?usp=sharing to https://docs.google.com/forms/d/e/.../formResponse
+6. After form creating, link it to the sheets in the Response section.
+7. Get the Pre-Filled URL of Google form as mentioned in steps in another step.
+8. Update the <entry.ID> in the Form.jsx -> submitForm().
+9. Check if the role names are same everywhere (Form.jsx, constants, any other place) and questions are in proper index as mentioned
+   in Form.jsx
+10. Test it by sending the request.
+
+(I have not applied Google Form Submission Using a Backend as Free-Service backend take time to start and this can provide bad experience
+ to any user. If get proper Backend, apply it)
+
+
+** Get Pre-Filled URL of a Google Form **
+1. Create a Google Form and open it.
+2. Click on the 'More'(Three-Dot) option on the top-right corner of the window.
+3. Click on the option 'Pre-filled form'
+4. Fill out all the required details and create the pre-filled URL.
+5. Copy the URL and get the respective <entry.ID> for each questions.
+6. In Code, a variable is used to store each <entry.ID> for better understanding and clarity, so use it for better clarity and usage.
+
+** Things to Keep in mind while creating your next form **
+
+1. Avoid using Google account login/authentication as it can probid automation apply.
+2. Do not permit the form to capture the email. Set up a different question for email so you may get it's <entry.ID>
+3. Create 2 Different Google forms for registration. One for website that must not contain any section and One for circulation
+   that may or may not contain sections.
+
+** Things to Try **
+1. We can fill out a Google Form more easily using Google Apps Script API but when integrating it, it was throwing error that 
+   can not be resolved (Tried a lot). So, TRY IT AGAIN IF IT WORKS.

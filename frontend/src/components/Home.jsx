@@ -3,10 +3,11 @@ import background from '../assets/background.jpg'
 import { styles } from '../styles'
 import { motion } from 'framer-motion'
 import { textVariant } from '../utils/motion'
+import { withLoadTracking } from './withLoadTracking'
 
 const heading = "RENDITION";
 
-const Home = () => {
+const Home = withLoadTracking(({onLoad}) => {
 
   useEffect(()=>{
     const handleScroll = () => {
@@ -24,7 +25,7 @@ const Home = () => {
   },[])
 
   return (
-    <div className={`relative h-screen w-screen flex items-center justify-center`}>
+    <div id="Home" className={`relative h-screen w-screen flex items-center justify-center`}>
       <img src={background} className='absolute inset-0 h-full w-full object-cover' alt="" />
       <div className='relative flex items-center justify-center flex-col z-0' id='mainHeading'>
         <motion.div initial="hidden" animate="show" variants={textVariant()} className='flex flex-row justify-center items-center'>
@@ -45,6 +46,6 @@ const Home = () => {
       </div>
     </div>
   )
-}
+})
 
 export default Home

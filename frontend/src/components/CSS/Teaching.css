@@ -12,6 +12,10 @@
     }
   }
   
+  .paused {
+    animation-play-state: paused; /* To pause animation when the button is clicked */
+  }
+
   .animate-custom{                                    /*Application of Animation*/
     --rotation-duration: 100s; /* Default duration */
     animation: autoRun var(--rotation-duration) linear infinite;
@@ -85,10 +89,10 @@
 @media (max-width: 600px) {
   @keyframes autoRun {                                    /*Adjust the animation for smaller screens*/
     from {
-      transform: perspective(1600px) rotateY(0deg);
+      transform: perspective(2000px) rotateY(0deg);
     }
     to {
-      transform: perspective(1600px) rotateY(360deg);
+      transform: perspective(2000px) rotateY(360deg);
     }
   }
   .reflection {

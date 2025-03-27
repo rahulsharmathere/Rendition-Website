@@ -8,6 +8,21 @@
     font-weight:lighter;
 }
 
+@font-face {
+    font-family: "CustomChalkFont";
+    src: url('./assets/Rudiment.ttf') format('truetype');
+}
+
 .heading {
     font-family: 'CustomFont', sans-serif;
 }
+
+.chalkFont {
+    font-family: 'CustomChalkFont', sans-serif;
+}
+
+::-webkit-scrollbar {
+    display: none;
+  }
+
+  

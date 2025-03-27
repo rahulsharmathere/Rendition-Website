@@ -1,0 +1,32 @@
+/* Hiding the buttons in mobile number input tag */
+input[type=number]::-webkit-inner-spin-button,                  /* For Removing the Up-Down Spinner button on number input field*/
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    color: white !important;
+    background-color: transparent !important;
+    -webkit-text-fill-color: white !important;
+    -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+.input-field.error {
+    border-bottom: 2px solid rgb(253, 53, 53);
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    50% { transform: translateX(10px); }
+    75% { transform: translateX(-10px); }
+}
+
+.shake {
+    animation: shake 0.5s ease-in-out;
+}
