@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import logo from '../assets/Logo.png'
+import logo from '../assets/logo.png'
 import { fadeIn } from '../utils/motion';
 import { motion } from 'framer-motion';
 import { withLoadTracking } from './withLoadTracking'
