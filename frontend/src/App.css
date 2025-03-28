@@ -9,17 +9,6 @@ html, body {
   scroll-behavior: smooth; /* Enables smooth scrolling */
 }
 
-.scroll-container {
-  scroll-snap-type: y mandatory; /* Enables vertical scroll snapping */
-  overflow-y: auto; /* Enables scrolling */
-  height: 100vh; /* Full screen height */
-}
-
-.section {
-  scroll-snap-align: start; /* Ensures snapping to the start (top) */
-  height: 100vh; /* Ensures each section takes full viewport height */
-}
-
 .logo {
   height: 6em;
   padding: 1.5em;

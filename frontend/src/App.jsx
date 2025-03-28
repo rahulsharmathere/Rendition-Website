@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { Events, Footer, Productions, Home, Navbar, Teachings, Team, Form } from './components';
-import RenditionLogo from './assets/Logo.png'; // Import your logo
+import RenditionLogo from './assets/logo.png'; // Import your logo
 
 // Custom Loading Component with Circular Loader
 const LoadingScreen = ({ onLoadComplete }) => {
@@ -104,12 +104,12 @@ function App() {
         }`}>
         <BrowserRouter>
           <Navbar onLoad={incrementLoaded} />
-          <Home onLoad={incrementLoaded} className='section' />
-          <Teachings onLoad={incrementLoaded} className='section' />
-          <Events onLoad={incrementLoaded} className='section' />
-          <Team onLoad={incrementLoaded} className='section' />
-          <Productions onLoad={incrementLoaded} className='section' />
-          <Form onLoad={incrementLoaded} className='section' />
+          <Home onLoad={incrementLoaded} />
+          <Teachings onLoad={incrementLoaded} />
+          <Events onLoad={incrementLoaded} />
+          <Team onLoad={incrementLoaded} />
+          <Productions onLoad={incrementLoaded}  />
+          <Form onLoad={incrementLoaded}/>
           <Footer />
         </BrowserRouter>
       </div>
