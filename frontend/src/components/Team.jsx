@@ -14,7 +14,7 @@ const Team = withLoadTracking(({onLoad}) => {
 
   useEffect(()=> {
     const rowHeight = 150; // Example row height in pixels
-    const numberOfRows = Math.ceil(window.innerHeight / rowHeight);
+    let numberOfRows = Math.ceil(window.innerHeight / rowHeight);
     if(window.innerWidth < 768) {
       numberOfRows = 5;
     }
