@@ -80,7 +80,7 @@ import y21_team from '../assets/Y21_Team.jpg'
 import y22_team from '../assets/Y22_Team.jpg'
 import y23_team from '../assets/Y23_Team.jpg'
 
-const backend_URL = "http://localhost:5000"
+const backend_URL = "https://rendition-backend.onrender.com"
 
 const emotions = [
     {
