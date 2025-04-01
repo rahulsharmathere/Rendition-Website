@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useMediaQuery } from 'react-responsive';
 import { questions, roles } from '../constants';
@@ -9,7 +9,8 @@ const RoleSelection = withLoadTracking(({ onLoad, onBack, onSubmit, isSubmitting
   const [appliedRoles, setAppliedRoles] = useState([]);
   const [answers, setAnswers] = useState({});
   const [showBackWarning, setShowBackWarning] = useState(false);
-  
+  const messageRef = useRef("Submitting...");
+
   const isMobile = useMediaQuery({ maxWidth: 768 });
   
   useEffect(() => {
@@ -24,9 +25,18 @@ const RoleSelection = withLoadTracking(({ onLoad, onBack, onSubmit, isSubmitting
       window.removeEventListener('keydown', handleKeyPress);
     };
   }, [selectedRole]);
-  
-  // Define the available roles
 
+  useEffect(() => {
+    if(isSubmitting) {
+      const timeout = setTimeout(() => {
+        messageRef.current = "Don't Refresh...";
+      }, 4000);
+    }
+    else {
+      messageRef.current = "Submitting...";
+    }
+  }, [isSubmitting])
+  
   const handleRoleSelection = (role) => {
     // If clicking on the currently selected role, deselect it
     if (selectedRole === role) {
@@ -76,7 +86,6 @@ const RoleSelection = withLoadTracking(({ onLoad, onBack, onSubmit, isSubmitting
   };
 
   const handleSubmit = () => {
-    console.log("Roles Submitted ", appliedRoles, answers)
     if (appliedRoles.length === 0) {
       alert('Please select and complete at least one role.');
       return;
@@ -97,12 +106,10 @@ const RoleSelection = withLoadTracking(({ onLoad, onBack, onSubmit, isSubmitting
       alignItems: "center", 
       justifyContent: "center",
       transition: { 
-        duration: 0.6,
+        duration: 0.3, // Reduced from 0.6
         type: "spring",
-        stiffness: 120,
-        damping: 20,
-        staggerChildren: 0.1,
-        when: "beforeChildren" 
+        stiffness: 100,
+        damping: 15
       }
     },
     column: { 
@@ -110,48 +117,62 @@ const RoleSelection = withLoadTracking(({ onLoad, onBack, onSubmit, isSubmitting
       alignItems: "start",
       justifyContent: "flex-start",
       transition: { 
-        duration: 0.6,
+        duration: 0.3, // Reduced from 0.6
         type: "spring",
-        stiffness: 120,
-        damping: 20,
-        staggerChildren: 0.1,
-        when: "beforeChildren"
+        stiffness: 100,
+        damping: 15
       }
     }
   };
 
-  // Smooth animation for role buttons
   const roleButtonVariants = {
     initial: { 
       opacity: 0, 
       y: 20,
-      scale: 0.9
     },
     animate: (i) => ({ 
       opacity: 1, 
       y: 0,
-      scale: 1,
       transition: { 
-        delay: i * 0.05,
-        duration: 0.4,
-        type: "spring",
-        stiffness: 200,
-        damping: 20
+        delay: Math.min(i * 0.03, 0.15), // Reduced delay and capped maximum
+        duration: 0.25, // Reduced from 0.4
       }
     }),
     exit: { 
-      opacity: 0, 
-      scale: 0.9,
+      opacity: 0,
       transition: {
-        duration: 0.3,
-        ease: "easeInOut"
+        duration: 0.2, // Reduced from 0.3
+      }
+    }
+  };
+
+  const panelVariants = {
+    hidden: { opacity: 0, height: 0 },
+    visible: { 
+      opacity: 1, 
+      height: '90%',
+      transition: {
+        duration: 0.3 // Reduced from 0.4
       }
     },
-    layout: {
-      type: "spring",
-      damping: 25,
-      stiffness: 120
+    exit: { 
+      opacity: 0, 
+      height: 0,
+      transition: {
+        duration: 0.2 // Reduced from 0.3
+      }
     }
+  };
+
+  const questionVariants = {
+    hidden: { opacity: 0 },
+    visible: (i) => ({ 
+      opacity: 1, 
+      transition: {
+        delay: Math.min(i * 0.1, 0.3), // Reduced and capped delay
+        duration: 0.2 // Reduced from 0.3
+      }
+    })
   };
 
   return (
@@ -181,25 +202,21 @@ const RoleSelection = withLoadTracking(({ onLoad, onBack, onSubmit, isSubmitting
                 initial="initial"
                 animate="animate"
                 exit="exit"
-                layoutId={`role-${role}`}
-                layout="position"
                 className={`cursor-pointer p-3 sm:p-4 md:p-5 rounded-xl text-white text-base sm:text-lg md:text-xl font-semibold shadow-xl backdrop-blur-sm transition-colors duration-300 
                   ${isSelected ? 'bg-gradient-to-r from-green-500 to-green-600' : 
                     isApplied ? 'bg-gradient-to-r from-purple-500 to-pink-500' : 
                     'bg-gradient-to-r from-gray-700 to-gray-800 hover:from-blue-600 hover:to-blue-700'}`}
                 onClick={() => handleRoleSelection(role)}
-                whileHover={{ scale: 1.05, boxShadow: "0px 10px 20px rgba(0,0,0,0.2)" }}
+                whileHover={{ scale: 1.03 }} // Reduced scale effect
                 whileTap={{ scale: 0.98 }}
-                transition={{ 
-                  layout: { type: "spring", stiffness: 150, damping: 30 },
-                  default: { duration: 0.3 }
-                }}
+                transition={{ duration: 0.2 }} // Simplified transition
               >
                 <div className="flex items-center gap-2 sm:gap-3">
                   {isApplied && (
                     <motion.div 
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
+                      transition={{ duration: 0.2 }} // Simplified
                       className="h-3 w-3 sm:h-4 sm:w-4 rounded-full bg-white"
                     />
                   )}
@@ -211,35 +228,18 @@ const RoleSelection = withLoadTracking(({ onLoad, onBack, onSubmit, isSubmitting
         </motion.div>
         
         {/* Questions for selected role */}
-        <AnimatePresence mode="wait">
+        <AnimatePresence mode="sync">
           {selectedRole && (
             <motion.div
               className="w-full h-1/4 pb-10 md:pb-0 overflow-scroll bg-white bg-opacity-95 pt-3 sm:pt-4 px-4 sm:px-6 rounded-2xl shadow-2xl border border-gray-200"
-              initial={{ opacity: 0, x: 50, height: 0 }}
-              animate={{ 
-                opacity: 1, 
-                x: 0, 
-                height: '90%',
-                transition: {
-                  duration: 0.4,
-                  stiffness: 100,
-                  damping: 20,
-                  delay: 0.1,
-                  when: "beforeChildren",
-                  staggerChildren: 0.1
-                }
-              }}
-              exit={{ 
-                opacity: 0, 
-                x: 50, 
-                height: 0,
-                transition: {
-                  duration: 0.3,
-                  ease: "easeInOut",
-                  when: "afterChildren"
-                }
-              }}
+              variants={panelVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
             >
+              <button className='absolute text-2xl sm:text-3xl text-slate-700 left-[85%] md:left-[95%] transition-all duration-500 hover:text-black hover:cursor-pointer hover:scale-105' onClick={()=>{setSelectedRole(null)}}>
+                Esc
+              </button>
               <h2 className="text-2xl sm:text-3xl text-gray-800 mb-4 sm:mb-6 font-bold">
                 {selectedRole} <span className="text-blue-600">Questions</span>
               </h2>
@@ -248,25 +248,10 @@ const RoleSelection = withLoadTracking(({ onLoad, onBack, onSubmit, isSubmitting
                   <motion.div 
                     key={index} 
                     className="flex flex-col gap-1 sm:gap-2"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ 
-                      opacity: 1, 
-                      y: 0,
-                      transition: {
-                        delay: 0.2 + index * 0.15,
-                        duration: 0.3,
-                        type: "spring",
-                        stiffness: 200,
-                        damping: 20
-                      }
-                    }}
-                    exit={{ 
-                      opacity: 0, 
-                      y: -10,
-                      transition: {
-                        duration: 0.2
-                      }
-                    }}
+                    custom={index}
+                    variants={questionVariants}
+                    initial="hidden"
+                    animate="visible"
                   >
                     <label className="text-gray-700 font-medium text-sm sm:text-lg">{question}</label>
                     <input 
@@ -283,8 +268,8 @@ const RoleSelection = withLoadTracking(({ onLoad, onBack, onSubmit, isSubmitting
               {/* Back button when a role is selected - for mobile */}
               <motion.button
                 className="mt-6 py-2 px-5 bg-gray-500 text-white rounded-lg font-semibold transition-all duration-200 md:hidden"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={{ scale: 1.03 }} // Reduced scale
+                whileTap={{ scale: 0.97 }}
                 onClick={() => setSelectedRole(null)}
               >
                 Back to Roles
@@ -300,8 +285,8 @@ const RoleSelection = withLoadTracking(({ onLoad, onBack, onSubmit, isSubmitting
           <div className="relative w-full sm:w-auto">
             <motion.button
               className="w-full sm:w-auto py-2 sm:py-3 px-6 sm:px-8 bg-red-600 text-white rounded-lg font-semibold transition-all duration-200"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              whileHover={{ scale: 1.03 }} // Reduced scale
+              whileTap={{ scale: 0.97 }}
               onClick={onBack}
               onMouseEnter={() => setShowBackWarning(true)}
               onMouseLeave={() => setShowBackWarning(false)}
@@ -309,30 +294,14 @@ const RoleSelection = withLoadTracking(({ onLoad, onBack, onSubmit, isSubmitting
               Back
             </motion.button>
             
-            {/* To show a warning before Back Button */}
             <AnimatePresence>
               {showBackWarning && (
                 <motion.div 
                   className="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 sm:-ml-12 bg-red-100 border border-red-400 text-red-600 px-3 sm:px-4 py-1 sm:py-2 rounded-lg shadow-lg whitespace-nowrap text-sm sm:text-base"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ 
-                    opacity: 1, 
-                    y: 0,
-                    transition: {
-                      duration: 0.1,
-                      type: "spring",
-                      stiffness: 500,
-                      damping: 25
-                    }
-                  }}
-                  exit={{ 
-                    opacity: 0, 
-                    y: 10,
-                    transition: {
-                      duration: 0.1,
-                      ease: "easeInOut"
-                    }
-                  }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.15 }} // Simplified transition
                 >
                   All the answers would be lost
                 </motion.div>
@@ -348,15 +317,11 @@ const RoleSelection = withLoadTracking(({ onLoad, onBack, onSubmit, isSubmitting
                 : 'bg-gradient-to-r from-green-500 to-teal-500 text-white hover:from-green-600 hover:to-teal-600' 
               : 'bg-gray-400 text-gray-700 cursor-not-allowed'
             }`}
-            whileHover={appliedRoles.length > 0 && !isSubmitting ? { scale: 1.05, boxShadow: "0px 8px 15px rgba(0,0,0,0.2)" } : {}}
-            whileTap={appliedRoles.length > 0 && !isSubmitting ? { scale: 0.95 } : {}}
+            whileHover={appliedRoles.length > 0 && !isSubmitting ? { scale: 1.03, boxShadow: "0px 8px 15px rgba(0,0,0,0.2)" } : {}} // Reduced scale
+            whileTap={appliedRoles.length > 0 && !isSubmitting ? { scale: 0.97 } : {}} // Adjusted scale
             onClick={handleSubmit}
             disabled={appliedRoles.length === 0 || isSubmitting}
-            transition={{
-              type: "spring",
-              stiffness: 400,
-              damping: 17
-            }}
+            transition={{ duration: 0.2 }} // Simplified transition
           >
             {isSubmitting ? (
               <div className="flex items-center justify-center">
@@ -364,7 +329,7 @@ const RoleSelection = withLoadTracking(({ onLoad, onBack, onSubmit, isSubmitting
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
-                Submitting...
+                {messageRef.current}
               </div>
             ) : (
               "Submit"

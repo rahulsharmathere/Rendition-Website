@@ -8,7 +8,7 @@ import { withLoadTracking } from './withLoadTracking'
 
 const Team = withLoadTracking(({onLoad}) => {
   
-  const [selectedBatch, setSelectedBatch] = useState("Y-22")
+  const [selectedBatch, setSelectedBatch] = useState("Y-23")
   const [imageLoader, setImageLoader] = useState(true);
   const [imageChunks, setImageChunks] = useState([]);
 

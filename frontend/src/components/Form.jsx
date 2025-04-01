@@ -103,7 +103,6 @@ const Form = withLoadTracking(({onLoad}) => {
 
   // Function to submit the form
   const submitForm = async () => {
-    console.log("Initial Data ", details)
     // Base URL of your Google Form (replace with your actual form URL)
     const baseUrl = "https://docs.google.com/forms/d/e/1FAIpQLSdbu5bGRRBq-szOgRf6f9jySSOqkefpq4t-uBMSwHzd4qi3yA/formResponse";
     
@@ -148,16 +147,12 @@ const Form = withLoadTracking(({onLoad}) => {
       }
     });
 
-    console.log("Updated Details ", details)
-
     const pageData = new FormData();
     pageData.append(fieldMappings.email, details.email); // Email
     pageData.append(fieldMappings.name, details.name); // Name
     pageData.append(fieldMappings.rollNo, details.rollNo); // Roll Number
     pageData.append(fieldMappings.mobNo, details.mobNo); // Mobile Number
-    console.log(details.selectedRoles,fieldMappings.selectedRoles)
     details.selectedRoles.forEach((role) => {
-      console.log(role, fieldMappings.selectedRoles)
       pageData.append(fieldMappings.selectedRoles, role);
     });
     
@@ -174,7 +169,6 @@ const Form = withLoadTracking(({onLoad}) => {
   }  
 
   const handleSubmit = async () => {
-    console.log("Submit Button Clicked")
     // Check for internet connection
     if (!checkInternetConnection()) {
       alert("Please connect to the internet before submitting.");
@@ -203,8 +197,6 @@ const Form = withLoadTracking(({onLoad}) => {
           selectedRoles: [],
           questions : questions,
           answers: {}})
-      } else {
-        alert("Error sending email.");
       }
 
     } catch (error) {
@@ -228,7 +220,7 @@ const Form = withLoadTracking(({onLoad}) => {
       
       <div id='questions' className='relative flex flex-col w-full h-full justify-center items-center gap-5'>
         {/* Basic Details Input  */}
-        <AnimatePresence mode='wait'>
+        <AnimatePresence mode='sync'>
           {!isTransitioning && step === 1 && (              
             <motion.div
               key='step1'
@@ -334,6 +326,7 @@ const Form = withLoadTracking(({onLoad}) => {
                 answers: formData.answers
               }));
             }}
+            onLoad={onLoad}
             isSubmitting={isSubmitting} // Pass loading state to disable submit button
           />
         )}

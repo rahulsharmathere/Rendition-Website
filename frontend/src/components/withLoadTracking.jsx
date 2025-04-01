@@ -7,7 +7,7 @@ export const withLoadTracking = (WrappedComponent) => {
       // Simulate loading with a small delay to ensure all assets are loaded
       const timer = setTimeout(() => {
         onLoad && onLoad();
-      }, 2000);
+      }, 1000);
 
       return () => clearTimeout(timer);
     }, [onLoad]);

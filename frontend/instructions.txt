@@ -15,6 +15,7 @@
 9. Check if the role names are same everywhere (Form.jsx, constants, any other place) and questions are in proper index as mentioned
    in Form.jsx
 10. Test it by sending the request.
+   Command - await fetch(baseUrl, { method: "POST", body: pageData, mode: "no-cors" });
 
 (I have not applied Google Form Submission Using a Backend as Free-Service backend take time to start and this can provide bad experience
  to any user. If get proper Backend, apply it)

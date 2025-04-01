@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { Events, Footer, Productions, Home, Navbar, Teachings, Team, Form } from './components';
 import RenditionLogo from './assets/logo.png'; // Import your logo
+import './App.css'
 
 // Custom Loading Component with Circular Loader
 const LoadingScreen = ({ onLoadComplete }) => {
@@ -45,7 +46,7 @@ const LoadingScreen = ({ onLoadComplete }) => {
           />
         </div>
         {/* Percentage Text */}
-        <div className="text-white text-xl font-light tracking-wider ">
+        <div className="loading-text text-white text-xl font-light tracking-wider ">
           Loading...
         </div>
 
