@@ -4,7 +4,7 @@ import { fadeIn } from '../utils/motion';
 import { motion } from 'framer-motion';
 import { withLoadTracking } from './withLoadTracking'
 
-const pages= ["Home", "Teachings", "Events", "Team", "Productions"];
+const pages= ["Home", "Emotions", "Events", "Team", "Productions"];
 
 const Navbar = withLoadTracking(({onLoad}) => {
   const [checked, setChecked] = useState(false);
