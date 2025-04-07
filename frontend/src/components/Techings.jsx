@@ -147,7 +147,7 @@ const Techings = withLoadTracking(({onLoad}) => {
     <div id="Teachings" className='sticky top-0 w-full'>
       <div className="heading text-white bg-black p-10 font-bold text-4xl sm:text-7xl leading-[1.3em] ">
         <motion.div className={`title font-bold text-4xl sm:text-7xl leading-[1.3em] `} variants={textVariant(0)} initial="hidden" whileInView="show" viewport={{once: true, amount: 0.25}}>
-          Teachings
+          Echos Of Emotions
         </motion.div>
       </div>
       {selected !== null ? 
